@@ -1,25 +1,17 @@
-import logo from './logo.svg';
-import './App.css';
+import * as React from "react";
+import { Admin, Resource, EditGuesser } from 'react-admin';
+import { UserList } from './users.js';
+import { PostEdit } from './posts.js';
+import authProvider from './authProvider';
+import jsonServerProvider from 'ra-data-json-server';
+import UserIcon from '@material-ui/icons/Group';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+const dataProvider = jsonServerProvider('http://localhost:8080/admin');
+// const dataProvider = jsonServerProvider('https://jsonplaceholder.typicode.com');
+const App = () => (
+    <Admin dataProvider={dataProvider} authProvider={authProvider}>
+        <Resource name="users" list={UserList}  edit={PostEdit} icon={UserIcon} />
+    </Admin>
+)
 
 export default App;
