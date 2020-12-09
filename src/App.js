@@ -6,7 +6,7 @@ import authProvider from './authProvider';
 import jsonServerProvider from 'ra-data-json-server';
 import UserIcon from '@material-ui/icons/Group';
 
-const dataProvider = jsonServerProvider('http://localhost:8080/admin');
+const dataProvider = jsonServerProvider('http://admin.my.computer/admin');
 // const dataProvider = jsonServerProvider('https://jsonplaceholder.typicode.com');
 const App = () => (
     <Admin dataProvider={dataProvider} authProvider={authProvider}>
