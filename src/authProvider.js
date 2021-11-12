@@ -1,10 +1,8 @@
-const GUARDIAN_API = "http://localhost:8081/auth/";
+import { GUARDIAN_API } from './config';
 
 export default {
     // called when the user attempts to log in
     login: ({ username, password }) => {
-
-
         var formData = new FormData();
         formData.append('username', username)
         formData.append('password', password)
@@ -24,7 +22,7 @@ export default {
                 return;
             })
             .catch(() => {
-                throw new Error('Network error during login')
+                return Promise.reject('Network error during login');
             });
     },
     // called when the user clicks on the logout button
@@ -38,12 +36,12 @@ export default {
           })
           .then(response => {
               if (response.status < 200  || response.status > 300) {
-                  throw new Error(response.statusText);
+                  return Promise.reject('Network error during logout');
               }
               return;
           })
           .catch(() => {
-              throw new Error('Network error during logout')
+            return Promise.reject('Network error during logout');
           });
     },
     // called when the API returns an error
@@ -52,7 +50,6 @@ export default {
     },
     // called when the user navigates to a new location, to check for authentication
     checkAuth: () => {
-        // return Promise.resolve();
         const request = new Request(GUARDIAN_API + 'validate', {
             method: 'GET',
         });
@@ -67,7 +64,7 @@ export default {
                 return;
             })
             .catch(() => {
-                throw new Error('Network error during auth validation')
+                return Promise.reject('Network error during auth validation');
             });
     },
     // called when the user navigates to a new location, to check for permissions / roles
